@@ -1,11 +1,12 @@
 // for audio
-var context;
-var matrix;
+var context,
+	contextClass,
+	matrix;
 
 var init = function() {
 	try {
-		window.AudioContext = window.AudioContext || window.webkitAudioContext;
-		context = new AudioContext();
+	    contextClass = (window.AudioContext || window.webkitAudioContext || window.mozAudioContext || window.oAudioContext || window.msAudioContext);
+        context = new contextClass();
 		matrix = new Matrix();
 	} catch(e) {
 		alert(e.name, e.message);
@@ -14,24 +15,24 @@ var init = function() {
 }
 
 // pure js scrolling stuff
-var sections = document.getElementsByClassName("section");
-var offsets = [0];
+// var sections = document.getElementsByClassName("section");
+// var offsets = [0];
 
-for (var i=0, ii=sections.length; i<ii; i++) {
-	offsets.push(sections[i].offsetTop);
-}
+// for (var i=0, ii=sections.length; i<ii; i++) {
+// 	offsets.push(sections[i].offsetTop);
+// }
 
-var curVisible = 0;
+// var curVisible = 0;
 
-var scrollHandler = function() {
-	if (offsets.indexOf(window.pageYOffset) != -1) {
-		curVisible = offsets.indexOf(window.pageYOffset);
-	}
-	document.getElementById("offsetCounter").innerHTML = "window.pageYOffset: " + window.pageYOffset + "<br/>section[" + curVisible + "].offsetTop: " + sections[curVisible].offsetTop
-}
+// var scrollHandler = function() {
+// 	if (offsets.indexOf(window.pageYOffset) != -1) {
+// 		curVisible = offsets.indexOf(window.pageYOffset);
+// 	}
+// 	document.getElementById("offsetCounter").innerHTML = "window.pageYOffset: " + window.pageYOffset + "<br/>section[" + curVisible + "].offsetTop: " + sections[curVisible].offsetTop
+// }
 
-window.addEventListener('load', init, false);
-window.addEventListener('scroll', scrollHandler, false);
+// window.addEventListener('load', init, false);
+// window.addEventListener('scroll', scrollHandler, false);
 
 var Matrix =  (function() {
 
